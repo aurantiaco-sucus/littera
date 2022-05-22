@@ -7,9 +7,9 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.room.Room
+import xyz.midnight233.littera.layout.AnimatedLazyColumnState
+import xyz.midnight233.littera.layout.rememberAnimatedLazyColumnState
 import xyz.midnight233.littera.persist.LitteraBase
-import xyz.midnight233.littera.piece.AnimatedLazyColumnState
-import xyz.midnight233.littera.piece.rememberAnimatedLazyColumnState
 
 @OptIn(ExperimentalMaterialApi::class)
 class LitteraState(

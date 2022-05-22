@@ -1,7 +1,5 @@
-package xyz.midnight233.littera.struct
+package xyz.midnight233.littera.content
 
-import xyz.midnight233.littera.content.ContentScope
-import xyz.midnight233.littera.content.PredicateScope
 import xyz.midnight233.littera.persist.Profile
 import xyz.midnight233.littera.stateful.ActionEntry
 import xyz.midnight233.littera.stateful.ActionEntryType
@@ -50,5 +48,5 @@ abstract class Scene {
         return content
     }
 
-    fun condition(predicate: () -> Boolean) = predicate
+    val plot get() = Plot(this)
 }

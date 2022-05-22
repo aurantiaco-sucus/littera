@@ -1,4 +1,4 @@
-package xyz.midnight233.littera.piece
+package xyz.midnight233.littera.layout
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -51,8 +51,9 @@ fun <T> rememberAnimatedLazyColumnState(defaultTemporaryItem: T)
 @Composable
 fun <T> AnimatedLazyColumn(
     state: AnimatedLazyColumnState<T>,
-    contentPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    callback: (List<T>) -> Unit = {},
     template: @Composable (item: T, fraction: Float) -> Unit,
 ) {
     var temporaryItem by state.temporaryItem
@@ -71,6 +72,7 @@ fun <T> AnimatedLazyColumn(
                 state.items += temporaryItem
                 temporaryItem = state.defaultTemporaryItem
                 state.temporaryItemVisibilityState.snapTo(0f)
+                callback(state.items)
                 temporaryItemExistence = false
             }
         }

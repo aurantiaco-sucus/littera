@@ -1,6 +1,6 @@
 package littera
 
-import xyz.midnight233.littera.struct.Scene
+import xyz.midnight233.littera.content.Scene
 
 object Lifecycle {
     fun profileTemplate(

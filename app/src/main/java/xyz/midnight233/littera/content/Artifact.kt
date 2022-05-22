@@ -1,4 +1,4 @@
-package xyz.midnight233.littera.struct
+package xyz.midnight233.littera.content
 
 import xyz.midnight233.littera.persist.Profile
 
@@ -17,6 +17,7 @@ class Artifact(
         dataKeys = template.keys.toList().joinToString("\n"),
         dataValues = template.values.toList().joinToString("\n"),
         artifactIdentity = identity,
+        journal = "Notification\nBegin of journal..."
     )
 
     companion object {

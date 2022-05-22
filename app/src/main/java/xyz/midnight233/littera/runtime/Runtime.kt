@@ -3,9 +3,7 @@ package xyz.midnight233.littera.runtime
 import xyz.midnight233.littera.content.ContentScope
 import xyz.midnight233.littera.persist.Profile
 import xyz.midnight233.littera.stateful.LitteraState
-import xyz.midnight233.littera.stateful.NotebookEntry
-import xyz.midnight233.littera.stateful.NotebookEntryType
-import xyz.midnight233.littera.struct.Artifact
+import xyz.midnight233.littera.content.Artifact
 import kotlin.concurrent.thread
 
 object Runtime {
@@ -26,7 +24,7 @@ object Runtime {
                 }
             }
             if (isActivated) {
-                Profile.push()
+                Profile.pushProfile()
                 continue
             }
             val actionBundles = currentScene.actions
@@ -38,7 +36,7 @@ object Runtime {
                 .let { actionBundles[it] }
                 .let { (_, _, content) -> content }
             actionContent(ContentScope)
-            Profile.push()
+            Profile.pushProfile()
         }
     }
 }

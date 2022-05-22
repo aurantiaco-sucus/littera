@@ -17,10 +17,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import xyz.midnight233.littera.piece.AnimatedLazyColumn
+import xyz.midnight233.littera.persist.Profile
 import xyz.midnight233.littera.stateful.JournalEntry
 import xyz.midnight233.littera.stateful.JournalEntryType
 import xyz.midnight233.littera.stateful.LitteraState
+import kotlin.concurrent.thread
 
 val Number.fromPx get() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_PX,
@@ -40,7 +41,12 @@ fun JournalPage(litteraState: LitteraState, paddingValues: PaddingValues) {
     ) {
         AnimatedLazyColumn(
             state = litteraState.journalALCState,
-            contentPadding = PaddingValues(top = 20.dp)
+            contentPadding = PaddingValues(top = 20.dp),
+            callback = {
+                thread {
+                    Profile.pushJournal(it)
+                }
+            }
         ) { item, alpha ->
             when (item.type) {
                 JournalEntryType.Narration ->

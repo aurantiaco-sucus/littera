@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,14 +15,15 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import xyz.midnight233.littera.persist.Profile
 import xyz.midnight233.littera.runtime.Runtime
 import xyz.midnight233.littera.stateful.LitteraState
-import xyz.midnight233.littera.struct.Artifact
+import xyz.midnight233.littera.content.Artifact
 import kotlin.concurrent.thread
 
 enum class EntrancePageViewType {
@@ -254,6 +254,13 @@ fun ArtifactSelectionView(
                 when (it) {
                     ProfileCardAction.Play -> {
                         Profile.instance = profile
+                        litteraState.journalALCState.items += Profile.pullJournal()
+                        litteraState.journalALCState.coroutineScope.launch {
+                            delay(250)
+                            litteraState.journalALCState.lazyColumnState.scrollToItem(
+                                litteraState.journalALCState.items.size - 1
+                            )
+                        }
                         Runtime.ignite()
                         litteraState.gameplayReady = true
                         currentViewState.value = EntrancePageViewType.ProfileOverview
