@@ -36,8 +36,8 @@ enum class EntrancePageViewType {
 fun EntrancePage(litteraState: LitteraState, paddingValues: PaddingValues) {
     Column(Modifier.padding(horizontal = 20.dp)) {
         Spacer(modifier = Modifier.height(paddingValues.calculateTopPadding()))
-        val currentViewState = remember { mutableStateOf(EntrancePageViewType.ArtifactSelection) }
-        val currentView by currentViewState
+        val currentViewState = litteraState.entrancePageViewTypeState
+        val currentView by litteraState.entrancePageViewTypeState
         Text(
             text = " " + when (currentView) {
                 EntrancePageViewType.ArtifactSelection -> "artifact selection"
@@ -326,6 +326,7 @@ fun ProfileCreationView(
                         }
                         litteraState.litteraBase.profileDao()
                             .insert(Profile.instance)
+                        litteraState.journalALCState.items += Profile.pullJournal()
                         Runtime.ignite()
                         litteraState.gameplayReady = true
                         currentView = EntrancePageViewType.ProfileOverview

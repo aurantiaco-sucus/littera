@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.room.Room
 import xyz.midnight233.littera.layout.AnimatedLazyColumnState
+import xyz.midnight233.littera.layout.EntrancePageViewType
 import xyz.midnight233.littera.layout.rememberAnimatedLazyColumnState
 import xyz.midnight233.littera.persist.LitteraBase
 
@@ -21,10 +22,12 @@ class LitteraState(
     gameplayReadyState: MutableState<Boolean>,
     val interactiveState: InteractiveState,
     bottomSheetHeightState: MutableState<Float>,
+    val entrancePageViewTypeState: MutableState<EntrancePageViewType>
 ) {
     var currentPage by currentPageState
     var gameplayReady by gameplayReadyState
     var bottomSheetHeight by bottomSheetHeightState
+    var entrancePageViewType by entrancePageViewTypeState
 
     init {
         instance = this
@@ -53,7 +56,8 @@ fun rememberLitteraState(applicationContext: Context) = LitteraState(
         "littera").build(),
     gameplayReadyState = remember { mutableStateOf(false) },
     interactiveState = rememberInteractiveState(),
-    bottomSheetHeightState = remember { mutableStateOf(0f) }
+    bottomSheetHeightState = remember { mutableStateOf(0f) },
+    entrancePageViewTypeState = remember { mutableStateOf(EntrancePageViewType.ArtifactSelection) }
 )
 
 enum class GameplayStateType {

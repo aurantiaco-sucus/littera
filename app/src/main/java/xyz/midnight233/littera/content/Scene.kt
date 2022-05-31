@@ -27,6 +27,39 @@ abstract class Scene {
             .mark("Note#${notes.indexOf(entry)}")
     }
 
+    private lateinit var originalStates: List<Boolean>
+    private lateinit var changedStates: List<Boolean>
+
+    fun initializeNoteState() {
+        originalStates = notes.indices
+            .map { index ->
+                val mark by Profile.scene(this::class.qualifiedName!!).mark("Note#$index")
+                mark
+            }
+        changedStates = originalStates
+    }
+
+    fun updateNoteState() {
+        originalStates = changedStates
+        changedStates = notes.indices
+            .map { index ->
+                val mark by Profile.scene(this::class.qualifiedName!!).mark("Note#$index")
+                mark
+            }
+    }
+
+    fun processDelta(add: (NotebookEntry) -> Unit, remove: (NotebookEntry) -> Unit) {
+        originalStates
+            .zip(changedStates)
+            .forEachIndexed { index, (original, changed) ->
+                if (original && !changed) {
+                    remove(notes[index])
+                } else if (!original && changed) {
+                    add(notes[index])
+                }
+            }
+    }
+
     val events = mutableListOf<Pair<PredicateScope.() -> Boolean, ContentScope.() -> Unit>>()
     fun event(
         condition: PredicateScope.() -> Boolean = { true },

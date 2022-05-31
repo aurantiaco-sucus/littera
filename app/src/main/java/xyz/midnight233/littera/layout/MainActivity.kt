@@ -25,6 +25,7 @@ import xyz.midnight233.littera.stateful.LitteraState
 import xyz.midnight233.littera.stateful.rememberLitteraState
 import xyz.midnight233.littera.theme.LitteraTheme
 import xyz.midnight233.dome41.registerDome41Artifacts
+import xyz.midnight233.littera.theme.Primary
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
@@ -32,7 +33,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         registerDome41Artifacts()
         setContent {
-            RootPage(rememberLitteraState(applicationContext))
+            LitteraTheme {
+                RootPage(rememberLitteraState(applicationContext))
+            }
         }
     }
 }
@@ -87,52 +90,50 @@ fun RootPage(litteraState: LitteraState) {
         else -> 0.dp
     })
 
-    LitteraTheme {
-        Surface(color = MaterialTheme.colors.background) {
-            BottomSheetScaffold(
-                scaffoldState = litteraState.bottomSheetScaffoldState,
-                sheetContent = {
-                    Column(
-                        Modifier.onSizeChanged {
-                            litteraState.bottomSheetHeight = it.height.toFloat()
-                        }
-                    ) {
-                        RootBottomSheetBar(
-                            litteraState,
-                            backgroundColor,
-                            textColor,
-                            sheetFraction
-                        )
-                        if (litteraState.currentPage == LitteraPage.Journal) {
-                            InteractiveView(litteraState)
-                        }
+    Surface(color = MaterialTheme.colors.background) {
+        BottomSheetScaffold(
+            scaffoldState = litteraState.bottomSheetScaffoldState,
+            sheetContent = {
+                Column(
+                    Modifier.onSizeChanged {
+                        litteraState.bottomSheetHeight = it.height.toFloat()
                     }
-                },
-                topBar = {
-                    TopAppBar(
-                        modifier = Modifier.height(56.dp * scaleFraction),
-                        backgroundColor = backgroundColor,
-                        elevation = 0.dp,
-                    ) {
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Text(
-                            text = "Littera",
-                            fontSize = 20.sp * scaleFraction,
-                            color = textColor,
-                        )
+                ) {
+                    RootBottomSheetBar(
+                        litteraState,
+                        backgroundColor,
+                        textColor,
+                        sheetFraction
+                    )
+                    if (litteraState.currentPage == LitteraPage.Journal) {
+                        InteractiveView(litteraState)
                     }
-                },
-                sheetElevation = 0.dp,
-                sheetShape = RoundedCornerShape(
-                    topStart = cornerRadius,
-                    topEnd = cornerRadius
-                ),
-                floatingActionButton = {
-                    ConfirmButton(litteraState)
-                },
-            ) { paddingValues ->
-                SubPagesView(paddingValues, litteraState)
-            }
+                }
+            },
+            topBar = {
+                TopAppBar(
+                    modifier = Modifier.height(56.dp * scaleFraction),
+                    backgroundColor = backgroundColor,
+                    elevation = 0.dp,
+                ) {
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Littera",
+                        fontSize = 20.sp * scaleFraction,
+                        color = textColor,
+                    )
+                }
+            },
+            sheetElevation = 0.dp,
+            sheetShape = RoundedCornerShape(
+                topStart = cornerRadius,
+                topEnd = cornerRadius
+            ),
+            floatingActionButton = {
+                ConfirmButton(litteraState)
+            },
+        ) { paddingValues ->
+            SubPagesView(paddingValues, litteraState)
         }
     }
 }

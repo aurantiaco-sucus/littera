@@ -4,6 +4,7 @@ import xyz.midnight233.littera.content.ContentScope
 import xyz.midnight233.littera.persist.Profile
 import xyz.midnight233.littera.stateful.LitteraState
 import xyz.midnight233.littera.content.Artifact
+import xyz.midnight233.littera.content.Scene
 import kotlin.concurrent.thread
 
 object Runtime {
@@ -15,6 +16,7 @@ object Runtime {
     set(value) { Profile.currentSceneValue = value::class.qualifiedName!! }
 
     fun ignite() = thread(isDaemon = true) {
+        artifact.scenes.forEach(Scene::initializeNoteState)
         while (true) {
             var isActivated = false
             currentScene.events.forEach { (condition, content) ->
@@ -25,6 +27,11 @@ object Runtime {
             }
             if (isActivated) {
                 Profile.pushProfile()
+                currentScene.updateNoteState()
+                currentScene.processDelta(
+                    add = { state.notebookEntries += it },
+                    remove = { state.notebookEntries -= it },
+                )
                 continue
             }
             val actionBundles = currentScene.actions
@@ -36,6 +43,11 @@ object Runtime {
                 .let { actionBundles[it] }
                 .let { (_, _, content) -> content }
             actionContent(ContentScope)
+            currentScene.updateNoteState()
+            currentScene.processDelta(
+                add = { state.notebookEntries += it },
+                remove = { state.notebookEntries -= it },
+            )
             Profile.pushProfile()
         }
     }

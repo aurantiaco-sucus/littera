@@ -2,6 +2,7 @@ package xyz.midnight233.dome41.ch0
 
 import xyz.midnight233.littera.stateful.ActionEntryType
 import xyz.midnight233.littera.content.Scene
+import xyz.midnight233.littera.stateful.NotebookEntryType
 
 object Intro : Scene() {
     val pIntroEngine by plot
@@ -10,6 +11,12 @@ object Intro : Scene() {
     init {
         pIntroEngine before pIntroArtifact
     }
+
+    var nIntro by note(
+        title = "Intro",
+        type = NotebookEntryType.Memo,
+        content = "About!"
+    )
 
     val aIntroEngine = action(
         name = "Introduction, Pt I",
@@ -20,6 +27,7 @@ object Intro : Scene() {
         narrate(
             "Intro."
         )
+        nIntro = true
         pIntroEngine.finish()
     }
 
