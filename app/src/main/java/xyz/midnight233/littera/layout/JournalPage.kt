@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
@@ -83,11 +84,12 @@ fun NarrationEntry(alpha: Float, content: String) {
 @Composable
 fun DialogueEntry(alpha: Float, subject: String, content: String) {
     Row {
-        Spacer(modifier = Modifier.width(15.dp))
+        Spacer(modifier = Modifier.width(10.dp))
         Text(
             text = subject,
             fontFamily = FontFamily.Serif,
             fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .scale(alpha)
                 .alpha(alpha)

@@ -4,7 +4,7 @@ import xyz.midnight233.littera.content.ContentScope
 import xyz.midnight233.littera.persist.Profile
 import xyz.midnight233.littera.stateful.LitteraState
 import xyz.midnight233.littera.content.Artifact
-import xyz.midnight233.littera.content.Scene
+import xyz.midnight233.littera.content.Segment
 import kotlin.concurrent.thread
 
 object Runtime {
@@ -12,11 +12,11 @@ object Runtime {
     lateinit var artifact: Artifact
 
     var currentScene
-    get() = artifact.scenes.find { it::class.qualifiedName!! == Profile.currentSceneValue }!!
+    get() = artifact.segments.find { it::class.qualifiedName!! == Profile.currentSceneValue }!!
     set(value) { Profile.currentSceneValue = value::class.qualifiedName!! }
 
     fun ignite() = thread(isDaemon = true) {
-        artifact.scenes.forEach(Scene::initializeNoteState)
+        artifact.segments.forEach(Segment::initializeNoteState)
         while (true) {
             var isActivated = false
             currentScene.events.forEach { (condition, content) ->

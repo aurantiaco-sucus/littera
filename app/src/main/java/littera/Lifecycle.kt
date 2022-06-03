@@ -1,13 +1,13 @@
 package littera
 
-import xyz.midnight233.littera.content.Scene
+import xyz.midnight233.littera.content.Segment
 
 object Lifecycle {
     fun profileTemplate(
-        initialScene: Scene,
+        initialSegment: Segment,
         vararg others: Pair<String, String>
     ) = mapOf(
-        "Littera:Scene" to initialScene::class.qualifiedName!!,
+        "Littera:Scene" to initialSegment::class.qualifiedName!!,
         *others
     )
 }

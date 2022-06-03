@@ -6,7 +6,7 @@ import xyz.midnight233.littera.stateful.ActionEntryType
 import xyz.midnight233.littera.stateful.NotebookEntry
 import xyz.midnight233.littera.stateful.NotebookEntryType
 
-abstract class Scene {
+abstract class Segment {
     val memo get() = Profile
         .scene(this::class.qualifiedName!!)
         .memoDelegate

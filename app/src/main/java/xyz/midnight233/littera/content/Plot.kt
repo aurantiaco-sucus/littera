@@ -3,7 +3,7 @@ package xyz.midnight233.littera.content
 import xyz.midnight233.littera.persist.Profile
 import kotlin.reflect.KProperty
 
-class Plot(val scene: Scene) {
+class Plot(val segment: Segment) {
     private lateinit var propName: String
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): Plot {
@@ -12,7 +12,7 @@ class Plot(val scene: Scene) {
     }
 
     var plotFinished by Profile
-        .scene(scene::class.qualifiedName!!)
+        .scene(segment::class.qualifiedName!!)
         .markDeferred { "Plot(${propName}):Finished" }
 
     private var condition: PredicateScope.() -> Boolean = { true }

@@ -1,13 +1,14 @@
 package xyz.midnight233.littera.content
 
 import xyz.midnight233.littera.runtime.Frontend
+import xyz.midnight233.littera.runtime.Runtime
 import xyz.midnight233.littera.stateful.JournalEntryType
 
 object ContentScope : PredicateScope {
-    fun speak(subject: String, vararg contents: String) {
+    fun String.speak(vararg contents: String) {
         Frontend.appendJournal(
             JournalEntryType.Dialogue,
-            subject,
+            this,
             contents.joinToString(" "))
         Frontend.requestContinuation()
     }
@@ -37,5 +38,9 @@ object ContentScope : PredicateScope {
             .find { it.first == Frontend.requestChoice(prompt, choices
                 .map { it.first }) }!!
             .second(ContentScope)
+    }
+
+    fun navigate(target: Segment) {
+        Runtime.currentScene = target
     }
 }

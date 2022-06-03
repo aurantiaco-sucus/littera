@@ -9,7 +9,7 @@ class Artifact(
     val description: String,
     val version: Int,
     val template: Map<String, String>,
-    val scenes: List<Scene>,
+    val segments: List<Segment>,
 ) {
     fun createProfile(name: String) = Profile(
         id = (name + identity).hashCode(),
