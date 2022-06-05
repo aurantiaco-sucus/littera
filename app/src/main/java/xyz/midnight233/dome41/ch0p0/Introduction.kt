@@ -1,4 +1,4 @@
-package xyz.midnight233.dome41.ch0
+package xyz.midnight233.dome41.ch0p0
 
 import xyz.midnight233.littera.stateful.ActionEntryType
 import xyz.midnight233.littera.content.Segment

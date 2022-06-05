@@ -1,7 +1,7 @@
 package xyz.midnight233.dome41
 
 import littera.Lifecycle
-import xyz.midnight233.dome41.ch0.Introduction
+import xyz.midnight233.dome41.ch0p0.Introduction
 import xyz.midnight233.littera.content.Artifact
 
 fun registerDome41Artifacts() {

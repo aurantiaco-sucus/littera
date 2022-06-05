@@ -7,5 +7,5 @@ data class ActionEntry(
 )
 
 enum class ActionEntryType {
-    Context, Interact, Backpack, Misc
+    Context, Examine, Interact, Backpack, Misc
 }
